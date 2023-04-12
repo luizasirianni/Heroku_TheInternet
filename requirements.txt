@@ -1,0 +1,10 @@
+# arquivo de requirements tem uma vantagem sobre os outros = mais automatizável
+# (outros: importar manualmente via terminal ou passando o mouse por cima)
+# esse arquivo contem bibliotecas e pacotes que vamos utilizar
+# no terminal -> pip install -r requirements
+
+selenium==4.7.2 # quando se quer determinar a versão do selenium a ser utilizada
+sauceclient>= 0.2.1 #versão mínima para rodar
+pytest==4.4.0
+pytest-xdist
+pytest-randomly
