@@ -2,10 +2,11 @@ import os
 from selenium import webdriver
 import pytest
 from selenium.webdriver.common.by import By
+from pages.login_page import LoginPage
 
 
 @pytest.fixture  # definição pra termos uma função baseada nele, como se fosse um padrão
-# vai entender q eh uma configuracao pro pytest. Vai sempre executar antes do teste
+# vai entender q é uma configuracao pro pytest. Vai sempre executar antes do teste
 
 def login(request):
     _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver.exe')  # criou um objeto.
@@ -18,13 +19,15 @@ def login(request):
     else:
         # caso não exista um chromedriver.exe no projeto
         driver_ = webdriver.Chrome()
+    login_page = LoginPage(driver_) # instanciando a classe LoginPage e passando o Selenium
 
     def quit():
         driver_.quit()
 
     # sinalizando o fim da execução para o ambiente
     request.addfinalizer(quit)
-    return driver_
+    return LoginPage
+
 
 '''########### MODO ANTIGO DE FAZER ##############
 def test_login_valido(driver):
