@@ -19,14 +19,14 @@ def login(request):
     else:
         # caso não exista um chromedriver.exe no projeto
         driver_ = webdriver.Chrome()
-    login_page = LoginPage(driver_) # instanciando a classe LoginPage e passando o Selenium
+    loginpage = LoginPage(driver_) # instanciando a classe LoginPage e passando o Selenium
 
     def quit():
         driver_.quit()
 
     # sinalizando o fim da execução para o ambiente
     request.addfinalizer(quit)
-    return LoginPage
+    return loginpage
 
 
 '''########### MODO ANTIGO DE FAZER ##############
@@ -40,21 +40,21 @@ def test_login_valido(driver):
 '''
 
 
-def test_login_successful(self, login):
+def test_login_successful(login):
     # preenche o usuario e a senha e clica no botao
     login.with_('tomsmith', 'SuperSecretPassword!')
     # validar a msg
     assert login.success_message()
 
 
-def test_invalid_username(self, login):
+def test_invalid_username(login):
     # preenche o usuario e a senha e clica no botao
     login.with_('aaaaaaa', 'SuperSecretPassword!')
     # validar a msg
     assert login.failure_message()
 
 
-def test_invalid_password(self, login):
+def test_invalid_password(login):
     # preenche o usuario e a senha e clica no botao
     login.with_('tomsmith', 'asdkskskad')
     # validar a msg

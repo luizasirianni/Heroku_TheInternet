@@ -4,7 +4,7 @@ from pages.base_page import BasePage  # herança da classe base page
 
 
 # 2 classe
-class LoginPage(BasePage): #faz uso do mapeamento da classe BasePage
+class LoginPage(BasePage):  # faz uso do mapeamento da classe BasePage
     # 2.1 mapeamento dos elementos da página
     _username_input = {'by': By.ID, 'value': 'username'}
     _password_input = {'by': By.ID, 'value': 'password'}
@@ -28,30 +28,28 @@ class LoginPage(BasePage): #faz uso do mapeamento da classe BasePage
         self._write(self._password_input, password)
         self._click(self._login_button)
 
+    '''     # programação comum - sem page object   
+            self.driver.find_element(self._username_input['by'],
+                                     self._username_input['value']).send_keys(username)
+            self.driver.find_element(self._password_input['by'],
+                                     self._password_input['value']).send_keys(password)
+            self.driver.find_element(self._login_button['by'],
+                                     self._login_button['value']).click()'''
+    # 2.3 ações realizadas
+    def success_message(self):
+        return self._visualize(self._success_message, 2)
 
-'''     # programação comum - sem page object   
-        self.driver.find_element(self._username_input['by'],
-                                 self._username_input['value']).send_keys(username)
-        self.driver.find_element(self._password_input['by'],
-                                 self._password_input['value']).send_keys(password)
-        self.driver.find_element(self._login_button['by'],
-                                 self._login_button['value']).click()'''
+    ''' # programaçao sem page object
+        return self.driver.find_element(self._success_message['by'],
+                                        self._success_message['value']).is_displayed()'''
 
-# 2.3 ações realizadas
+    def failure_message(self):
+        return self._visualize(self._failure_message, 5)
 
-def success_message(self):
-    return self._visualize(self._success_message, 5)
+    ''' # programaçao sem page object
+        return self.driver.find_element(self._failure_message['by'],
+                                        self._failure_message['value']).is_displayed()'''
 
 
-''' # programaçao sem page object
-    return self.driver.find_element(self._success_message['by'],
-                                    self._success_message['value']).is_displayed()'''
 
 
-def failure_message(self):
-    return self._visualize(self._failure_message, 5)
-
-
-''' # programaçao sem page object
-    return self.driver.find_element(self._failure_message['by'],
-                                    self._failure_message['value']).is_displayed()'''
