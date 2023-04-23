@@ -1,6 +1,8 @@
-#configurar o pytest para trabalhar remotamente em ambientes distribuídos
+'''configurar o pytest para trabalhar remotamente em
+ambientes distribuídos (saucelabs)'''
 import os
 
+import outcome
 import pytest
 from selenium import webdriver
 
@@ -40,6 +42,7 @@ def pytest_addoption(parser):
     )
 @pytest.fixture
 def driver(request):
+    '''Inicialização dos testes - similar ao Before/Setup'''
     config.baseurl = request.config.getoption('--baseurl')
     config.host = request.config.getoption('--host')
     config.browser = request.config.getoption('--browser')
@@ -72,3 +75,23 @@ def driver(request):
                 driver_ = webdriver.Firefox(_geckodriver)
             else:
                 driver_ = webdriver.Firefox()
+
+    def quit():
+        '''Finalização dos testes - similar ao After ou TearDown'''
+        #sinalização se passou ou falhou conforme o retorno da requisição
+        sauce_result = 'failed' if request.node.rep_call.failed else 'passed'
+
+        driver_.execute_script('sauce:job-result={}'.format(sauce_result)) #traz o resultado do teste formatado conforme o if acima
+        driver_.quit()
+
+    request.addfinalizer(quit) #ao finalizar, chama a função quit
+    return driver_
+
+@pytest.hookimpl(hookwrapper=True, tryfirst=True) #implementação de gatilho de comunicação com o saucelabs
+def pytest_runtest_makereport(item, call):
+    '''parâmetros para geração do relatório'''
+    outcome = yield
+    rep = outcome.get_result()
+
+    '''definir atributos para o relatório'''
+    setattr(item, 'rep_' + rep.when, rep)
