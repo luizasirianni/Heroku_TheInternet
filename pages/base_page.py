@@ -1,7 +1,7 @@
 from selenium.common import TimeoutException, NoSuchElementException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
+from tests import config
 
 class BasePage():
 
@@ -9,8 +9,10 @@ class BasePage():
         self.driver = driver # este é o selenium
 
     def _geturl(self, url):
-        self.driver.get(url)
-
+        if url.startwith('http'): #se o endereço começa com http ou https
+            self.driver.get(url)
+        else:
+            self.driver.get(config.baseurl + url)
     def _findelement(self, locator):
         #estrutura genérica pra localizar qualquer elemento
         return self.driver.find_element(locator['by'], locator['value'])
