@@ -9,10 +9,12 @@ class BasePage():
         self.driver = driver # este é o selenium
 
     def _geturl(self, url):
-        if url.startwith('http'): #se o endereço começa com http ou https
+        url = 'https://the-internet.herokuapp.com/login'
+        self.driver.get(url)
+        '''if url.startwith('http'): #se o endereço começa com http ou https
             self.driver.get(url)
         else:
-            self.driver.get(config.baseurl + url)
+            self.driver.get(config.baseurl + url)'''
     def _findelement(self, locator):
         #estrutura genérica pra localizar qualquer elemento
         return self.driver.find_element(locator['by'], locator['value'])
