@@ -59,8 +59,9 @@ def driver(request):
                 'name': test_name
             }
         }
-        _credentials = os.environ['oauth-lu.sirianni-118c4'] + ':' + os.environ['c335ffe6-7788-43a7-9f9d-a062b6f03c61']
-        _url = 'https://' + _credentials + '@ondemand.eu-central-1.saucelabs.com:443/wd/hub'
+        #_credentials = os.environ['oauth-lu.sirianni-118c4'] + ':' + os.environ['c335ffe6-7788-43a7-9f9d-a062b6f03c61']
+        #_url = 'https://' + _credentials + '@ondemand.eu-central-1.saucelabs.com:443/wd/hub'
+        _url = 'https://oauth-lu.sirianni-118c4:c335ffe6-7788-43a7-9f9d-a062b6f03c61@ondemand.eu-central-1.saucelabs.com:443/wd/hub'
         driver_ = webdriver.Remote(_url, capabilities)
     else: #execuçao local / localhost
         if config.host == 'chrome':
